@@ -53,12 +53,16 @@ Note that the value of `x` persists across the hot swap, while the value of `y` 
 
 Also note that a hot swap is only attempted when the main loop returns a non-zero value for `hot_swap`. This can be used to periodically attempt a hot swap, or to create a keyboard hotkey that triggers an attempt, for example.
 
+From here, you can make changes to `hot_main.c`, save it, rerun `make`, and see the effect of your changes immediately. The only limitations to this approach are that 1) making changes to the `State` struct requires a full restart, and 2) multi-threading is not supported. Also, both of these limitations can be bypasses at the cost of increased complexity. Hot loading changes to the `State` struct can, for example, be handled by adding logic to allocate the new state on hot-swap, copy in the old state variables, and finish initializing the new state variables. Multi-threading support could be added in a couple different ways, but the best approach will depend on the application.
+
 # Porting
 
-This has not been tested on linux, but it should be trivial to port (if it doesn't already work). A similar approach will also work for Windows, though the function calls needed to load a dynamic library would be different.
+This has not been tested on linux, but it should be trivial to port (if it doesn't already work).
+
+A similar approach will also work for Windows, though the function calls needed to load a dynamic library would be different. Also, due to file locking, you would need to alternate between two or more different file names for the dynamic library.
 
 # License
 
-Copyright (c) 2017 by Scott J Maddox
+Copyright (c) 2017 by Scott J Maddox.
 
-All source code in this project is dedicated to the public domain under the terms of the (Creative Commons *CC0 1.0 Universal* license)[https://creativecommons.org/publicdomain/zero/1.0/].
+All source code in this project is dedicated to the public domain under the terms of the [Creative Commons *CC0 1.0 Universal* license](https://creativecommons.org/publicdomain/zero/1.0/).
